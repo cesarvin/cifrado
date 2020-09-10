@@ -10,6 +10,7 @@ from Crypto.Cipher import AES
 
 def encryptMainPass(password):
     # TODO - encriptar password
+
     ecn_pass = password
     return ecn_pass
 
@@ -24,13 +25,8 @@ def encryptPasswords(webpage, password):
     data = webpage.encode('utf8')
     cipher = AES.new(encrypted, AES.MODE_EAX)
     nonce = cipher.nonce
-    ciphertext, tag = cipher.encrypt_and_digest(data)
-    print("Parte Cifrada")
-    print("Llave: " + str(encrypted))
-    print("Nonce: " + str(nonce))
-    print("Ciphertext: " + str(ciphertext))
-    print("Mac - tag: " + str(tag))
-    return encrypted, data, cipher, nonce, ciphertext, tag
+    ciphertext, tag = cipher.encrypt_and_digest(encrypted)
+    return ciphertext, tag
 
 def decryptPasswords(webpage, nonce, ciphertext, tag):
     decrypted = webpage.encode('utf8')
@@ -77,6 +73,7 @@ if os.path.isfile(db_file):
         elif choice == 2:
             webpage = input('Ingrese el nombre del sitio\n')
             password = input('Ingrese la contraseña que desea guardar\n')
+            encryptPasswords(webpage, password)
 
         else:
             print("no valido, intenta de nuevo") 
