@@ -40,8 +40,6 @@ def decryptPasswords(webpage, nonce, ciphertext, tag):
 
 
 
-
-
 clear = lambda: os.system('cls')
 
 
@@ -65,16 +63,30 @@ if os.path.isfile(db_file):
         #TODO - todo lo de encriptar
         
         choice = int(input(
-            "1. Presiona '1' para salir.\n"
-            "2. Presiona '2' para ingresa una nueva contraseña\n"))
+            "1. Salir.\n"
+            "2. Ingresar un nuevo registro (plataforma-contraseña)a\n"
+            "3. Obtener contraseña para un sitio\n"
+            "4. Eliminar un registro\n"))
+        
         clear()
         if choice == 1:
             exit()
         elif choice == 2:
             webpage = input('Ingrese el nombre del sitio\n')
             password = input('Ingrese la contraseña que desea guardar\n')
-            encryptPasswords(webpage, password)
-
+           # encryptPasswords(webpage, password)
+            Set_Values(webpage,password)
+        elif choice == 3:
+            webpage = input('Ingrese el nombre del sitio\n')
+           
+           # encryptPasswords(webpage, password)
+            Find_Values(webpage,0)
+        elif choice == 4:
+            webpage = input('Ingrese el nombre del sitio\n')
+           
+           # encryptPasswords(webpage, password)
+            a = Delete_values(webpage)
+            
         else:
             print("no valido, intenta de nuevo") 
 else:
