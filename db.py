@@ -61,7 +61,7 @@ def login(password):
     try: 
         cnn = conection(db_file)
         c = cnn.cursor()
-        #consulta si el password está en la db
+        #consulta si el password estï¿½ en la db
         c.execute("""SELECT password FROM main_pass WHERE password=?""", (password,))
         #c.execute("SELECT * FROM main_pass ")
         
