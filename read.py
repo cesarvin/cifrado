@@ -11,7 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_MainWindow(object):
+class Ui_Read(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
@@ -28,7 +28,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.label_2 = QtWidgets.QLabel(self.frame)
         self.label_2.setText("")
-        self.label_2.setPixmap(QtGui.QPixmap("../../../../Downloads/logo.jpeg"))
+        self.label_2.setPixmap(QtGui.QPixmap("logo.jpeg"))
         self.label_2.setObjectName("label_2")
         self.horizontalLayout.addWidget(self.label_2)
         self.consultar = QtWidgets.QPushButton(self.frame)
@@ -70,9 +70,6 @@ class Ui_MainWindow(object):
         self.lineEdit.setGeometry(QtCore.QRect(290, 50, 291, 31))
         self.lineEdit.setObjectName("lineEdit")
         MainWindow.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -90,7 +87,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
+    ui = Ui_Read()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())

@@ -6,9 +6,12 @@
 #
 # WARNING! All changes made in this file will be lost!
 
+import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
+from read import Ui_Read
+from createDelete import Ui_CreateDelete
 
-class Ui_MainWindow(object):
+class Ui_Home(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
@@ -25,22 +28,22 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.label_2 = QtWidgets.QLabel(self.frame)
         self.label_2.setText("")
-        self.label_2.setPixmap(QtGui.QPixmap("../../../../Downloads/logo.jpeg"))
+        self.label_2.setPixmap(QtGui.QPixmap("logo.jpeg"))
         self.label_2.setObjectName("label_2")
         self.horizontalLayout.addWidget(self.label_2)
         self.agregar = QtWidgets.QPushButton(self.frame)
         self.agregar.setStyleSheet("background-color: rgb(198, 100, 106);\n"
-"color: rgb(255, 255, 255);")
+        "color: rgb(255, 255, 255);")
         self.agregar.setObjectName("agregar")
         self.horizontalLayout.addWidget(self.agregar)
         self.eliminar = QtWidgets.QPushButton(self.frame)
         self.eliminar.setStyleSheet("background-color: rgb(198, 100, 106);\n"
-"color: rgb(255, 255, 255);")
+        "color: rgb(255, 255, 255);")
         self.eliminar.setObjectName("eliminar")
         self.horizontalLayout.addWidget(self.eliminar)
         self.consultar = QtWidgets.QPushButton(self.frame)
         self.consultar.setStyleSheet("background-color: rgb(198, 100, 106);\n"
-"color: rgb(255, 255, 255);")
+        "color: rgb(255, 255, 255);")
         self.consultar.setObjectName("consultar")
         self.horizontalLayout.addWidget(self.consultar)
         self.frame_2 = QtWidgets.QFrame(self.centralwidget)
@@ -52,7 +55,7 @@ class Ui_MainWindow(object):
         self.tableWidget = QtWidgets.QTableWidget(self.frame_2)
         self.tableWidget.setGeometry(QtCore.QRect(170, 60, 361, 192))
         self.tableWidget.setStyleSheet("background-color: rgb(198, 100, 106);\n"
-"color: rgb(255, 255, 255);")
+        "color: rgb(255, 255, 255);")
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(2)
         self.tableWidget.setRowCount(0)
@@ -60,10 +63,15 @@ class Ui_MainWindow(object):
         self.tableWidget.setHorizontalHeaderItem(0, item)
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(1, item)
+        self.agregar.raise_()
+        self.eliminar.raise_()
+        self.consultar.raise_()
+        self.tableWidget.raise_()
+        self.label_2.raise_()
+        self.agregar.clicked.connect(self.openCreateDelete)
+        self.eliminar.clicked.connect(self.openCreateDelete)
+        self.consultar.clicked.connect(self.openRead)
         MainWindow.setCentralWidget(self.centralwidget)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -79,13 +87,25 @@ class Ui_MainWindow(object):
         item = self.tableWidget.horizontalHeaderItem(1)
         item.setText(_translate("MainWindow", "Password"))
 
+    def openRead(self):
+        self.window = QtWidgets.QMainWindow()
+        self.ui = Ui_Read()
+        self.ui.setupUi(self.window)
+        self.window.show()
+    
+    def openCreateDelete(self):
+        self.window = QtWidgets.QMainWindow()
+        self.ui = Ui_CreateDelete()
+        self.ui.setupUi(self.window)
+        self.window.show()
+
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    Home = QtWidgets.QMainWindow()
+    ui = Ui_Home()
+    ui.setupUi(Home)
+    Home.show()
     sys.exit(app.exec_())
 
