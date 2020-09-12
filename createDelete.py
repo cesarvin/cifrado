@@ -69,6 +69,8 @@ class Ui_CreateDelete(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
         self.agregar.clicked.connect(self.agregar_sitio)
+        self.eliminar.clicked.connect(self.eliminar_sitio)
+
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -87,14 +89,18 @@ class Ui_CreateDelete(object):
         # self.window = QtWidgets.QMainWindow()
         # # self.ui = Ui_Home()
         # self.ui.setupUi(self.window)
-        # Ui_CreateDelete.hide()
+        # CreateDelete.hide()
         # self.window.show()
+
+    def eliminar_sitio(self):
+        sitio_eliminar = self.sitio.toPlainText()
+        Delete_values(sitio_eliminar)
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
+    CreateDelete = QtWidgets.QMainWindow()
     ui = Ui_CreateDelete()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    ui.setupUi(CreateDelete)
+    CreateDelete.show()
     sys.exit(app.exec_())
