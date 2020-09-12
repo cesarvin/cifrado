@@ -12,7 +12,14 @@ from home import Ui_Home
 from read import Ui_Read
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.uic import loadUi
+import os
+import os.path
+from os import listdir
+from os.path import isfile, join
+from gl import *
+from db import *
 
+db_file = 'storage.db'
 
 class Ui_Login(object):
     def setupUi(self, MainWindow):
@@ -39,36 +46,14 @@ class Ui_Login(object):
         self.label_2.setText("")
         self.label_2.setPixmap(QtGui.QPixmap("logo.jpeg"))
         self.label_2.setObjectName("label_2")
-        self.ingresarNuevo = QtWidgets.QPushButton(self.frame)
-        self.ingresarNuevo.setGeometry(QtCore.QRect(170, 360, 113, 32))
-        self.ingresarNuevo.setStyleSheet("background-color: rgb(198, 100, 106);\n"
-"color: rgb(255, 255, 255);")
-        self.ingresarNuevo.setObjectName("ingresarNuevo")
-        self.ingresarNuevo.clicked.connect(self.openHome)
-        self.label_3 = QtWidgets.QLabel(self.frame)
-        self.label_3.setGeometry(QtCore.QRect(70, 300, 241, 16))
-        self.label_3.setObjectName("label_3")
-        self.masterPasswordNueva = QtWidgets.QTextEdit(self.frame)
-        self.masterPasswordNueva.setGeometry(QtCore.QRect(70, 320, 301, 31))
-        self.masterPasswordNueva.setStyleSheet("")
-        self.masterPasswordNueva.setObjectName("masterPassword_2")
-        self.label_4 = QtWidgets.QLabel(self.frame)
-        self.label_4.setGeometry(QtCore.QRect(70, 150, 241, 16))
-        self.label_4.setObjectName("label_4")
-        self.label_5 = QtWidgets.QLabel(self.frame)
-        self.label_5.setGeometry(QtCore.QRect(70, 280, 241, 16))
-        self.label_5.setObjectName("label_5")
         self.ingresarViejo = QtWidgets.QPushButton(self.frame)
         self.ingresarViejo.setGeometry(QtCore.QRect(170, 230, 113, 32))
         self.ingresarViejo.setStyleSheet("background-color: rgb(198, 100, 106);\n"
 "color: rgb(255, 255, 255);")
         self.ingresarViejo.setObjectName("ingresarViejo")
-        self.masterPasswordNueva.raise_()
         self.masterPasswordVieja.raise_()
-        self.ingresarNuevo.raise_()
         self.ingresarViejo.raise_()
         self.ingresarViejo.clicked.connect(self.openHome)
-        self.ingresarNuevo.clicked.connect(self.openHome)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -78,19 +63,37 @@ class Ui_Login(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label.setText(_translate("MainWindow", "Contraseña Maestra"))
-        self.ingresarNuevo.setText(_translate("MainWindow", "Ingresar"))
-        self.label_3.setText(_translate("MainWindow", "Nueva Contraseña Maestra"))
-        self.label_4.setText(_translate("MainWindow", "Ya usuario..."))
-        self.label_5.setText(_translate("MainWindow", "Nuevo Usuario"))
         self.ingresarViejo.setText(_translate("MainWindow", "Ingresar"))
-        
 
     def openHome(self):
-        self.window = QtWidgets.QMainWindow()
-        self.ui = Ui_Home()
-        self.ui.setupUi(self.window)
-        Login.hide()
-        self.window.show()
+        if os.path.isfile(db_file):
+
+            password = self.masterPasswordVieja.toPlainText()
+            #TODO - encriptar el password
+            ep = encryptMainPass(password)
+            
+            #TODO - confirmar el password en la db
+            if login(ep):
+                self.window = QtWidgets.QMainWindow()
+                self.ui = Ui_Home()
+                self.ui.setupUi(self.window)
+                Login.hide()
+                self.window.show()
+            else:
+                print("password incorrecto")
+
+        else:
+            password = self.masterPasswordVieja.toPlainText()
+            #encripta el password principal
+            ep = encryptMainPass(password)
+
+            register(ep)
+            self.window = QtWidgets.QMainWindow()
+            self.ui = Ui_Home()
+            self.ui.setupUi(self.window)
+            Login.hide()
+            self.window.show()
+        
 
 if __name__ == "__main__":
     import sys
