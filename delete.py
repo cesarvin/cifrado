@@ -14,7 +14,7 @@ from PyQt5.uic import loadUi
 from db import *
 
 
-class Ui_CreateDelete(object):
+class Ui_Delete(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
@@ -53,23 +53,14 @@ class Ui_CreateDelete(object):
         self.sitio = QtWidgets.QTextEdit(self.frame_2)
         self.sitio.setGeometry(QtCore.QRect(290, 70, 291, 31))
         self.sitio.setObjectName("sitio")
-        self.password = QtWidgets.QTextEdit(self.frame_2)
-        self.password.setGeometry(QtCore.QRect(290, 150, 291, 31))
-        self.password.setObjectName("password")
         self.label = QtWidgets.QLabel(self.frame_2)
         self.label.setGeometry(QtCore.QRect(150, 80, 111, 16))
         self.label.setStyleSheet("font: 14pt;")
         self.label.setObjectName("label")
-        self.label_3 = QtWidgets.QLabel(self.frame_2)
-        self.label_3.setGeometry(QtCore.QRect(150, 160, 121, 16))
-        self.label_3.setStyleSheet("font: 14pt;")
-        self.label_3.setObjectName("label_3")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-        self.agregar.clicked.connect(self.agregar_sitio)
-        self.eliminar.clicked.connect(self.eliminar_sitio)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -80,27 +71,12 @@ class Ui_CreateDelete(object):
         self.agregar.setText(_translate("MainWindow", "Agregar"))
         self.eliminar.setText(_translate("MainWindow", "Eliminar"))
         self.label.setText(_translate("MainWindow", "Sitio Web"))
-        self.label_3.setText(_translate("MainWindow", "Contraseña"))
-
-    def agregar_sitio(self):
-        sitio_nuevo = self.sitio.toPlainText()
-        password_nuevo = self.password.toPlainText()
-        Set_Values(sitio_nuevo, password_nuevo)
-        # self.window = QtWidgets.QMainWindow()
-        # # self.ui = Ui_Home()
-        # self.ui.setupUi(self.window)
-        # CreateDelete.hide()
-        # self.window.show()
-
-    def eliminar_sitio(self):
-        sitio_eliminar = self.sitio.toPlainText()
-        Delete_values(sitio_eliminar)
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    CreateDelete = QtWidgets.QMainWindow()
-    ui = Ui_CreateDelete()
-    ui.setupUi(CreateDelete)
-    CreateDelete.show()
+    Delete = QtWidgets.QMainWindow()
+    ui = Ui_Delete()
+    ui.setupUi(Delete)
+    Delete.show()
     sys.exit(app.exec_())

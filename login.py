@@ -11,6 +11,7 @@ import sys
 from home import Ui_Home
 from read import Ui_Read
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMessageBox
 from PyQt5.uic import loadUi
 import os
 import os.path
@@ -65,6 +66,12 @@ class Ui_Login(object):
         self.label.setText(_translate("MainWindow", "Contraseña Maestra"))
         self.ingresarViejo.setText(_translate("MainWindow", "Ingresar"))
 
+    def openPopUpError(self, mensaje):
+        msgError = QMessageBox()
+        msgError.setText(mensaje)
+        msgError.setIcon(QMessageBox.Warning)
+        x = msgError.exec_()
+
     def openHome(self):
         if os.path.isfile(db_file):
 
@@ -81,6 +88,7 @@ class Ui_Login(object):
                 self.window.show()
             else:
                 print("password incorrecto")
+                self.openPopUpError("Contraseña incorrecto")
 
         else:
             password = self.masterPasswordVieja.toPlainText()
