@@ -5,7 +5,6 @@ def encryptMainPass(password):
     return ecn_pass
 
 
-
 def decryptMainPass(password):
     dec_pass = password
     return dec_pass

@@ -9,7 +9,9 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+# from home import Ui_Home
+from PyQt5.uic import loadUi
+from db import *
 
 
 class Ui_CreateDelete(object):
@@ -66,7 +68,7 @@ class Ui_CreateDelete(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-
+        self.agregar.clicked.connect(self.agregar_sitio)
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -78,6 +80,15 @@ class Ui_CreateDelete(object):
         self.label.setText(_translate("MainWindow", "Sitio Web"))
         self.label_3.setText(_translate("MainWindow", "Contraseña"))
 
+    def agregar_sitio(self):
+        sitio_nuevo = self.sitio.toPlainText()
+        password_nuevo = self.password.toPlainText()
+        Set_Values(sitio_nuevo, password_nuevo)
+        # self.window = QtWidgets.QMainWindow()
+        # # self.ui = Ui_Home()
+        # self.ui.setupUi(self.window)
+        # Ui_CreateDelete.hide()
+        # self.window.show()
 
 if __name__ == "__main__":
     import sys
