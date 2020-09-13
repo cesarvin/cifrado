@@ -88,7 +88,7 @@ class Ui_Login(object):
                 self.window.show()
             else:
                 print("password incorrecto")
-                self.openPopUpError("Contraseña incorrecto")
+                self.openPopUpError("Contraseña incorrecta")
 
         else:
             password = self.masterPasswordVieja.toPlainText()
