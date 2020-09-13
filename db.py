@@ -33,7 +33,8 @@ def Set_Values(site, password):
     try:
         #coneccion a la db, la crea si no existe
         
-        if (Find_Values(site,1)== None):
+        # if (Find_Values(site,1)== None):
+        if (Find_Values(site)== None):
             op = input ("El sitio ya existe , desea actualizarlo?(1=si/2=no) ")
             if (op==1):
                 
@@ -60,7 +61,7 @@ def Set_Values(site, password):
         print(e)
 
 
-def Find_Values(site):       
+def Find_Values(site, acc):       
     try:
         #coneccion a la db, la crea si no existe
         cnn = conection(db_file)

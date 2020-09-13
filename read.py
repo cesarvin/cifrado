@@ -67,12 +67,12 @@ class Ui_Read(object):
         self.tableWidget.setStyleSheet("background-color: rgb(198, 100, 106);\n"
         "color: rgb(255, 255, 255);")
         self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(2)
-        self.tableWidget.setRowCount(0)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(0, item)
-        item = QtWidgets.QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(1, item)
+        # self.tableWidget.setColumnCount(2)
+        # self.tableWidget.setRowCount(0)
+        # item = QtWidgets.QTableWidgetItem()
+        # self.tableWidget.setHorizontalHeaderItem(0, item)
+        # item = QtWidgets.QTableWidgetItem()
+        # self.tableWidget.setHorizontalHeaderItem(1, item)
         MainWindow.setCentralWidget(self.centralwidget)
         self.consultar.clicked.connect(self.consulta)
 
@@ -85,15 +85,51 @@ class Ui_Read(object):
         self.consultar.setText(_translate("MainWindow", "Consultar"))
         self.label.setText(_translate("MainWindow", "Sitio Web"))
         self.label_3.setText(_translate("MainWindow", "Contraseña Maestra"))
-        item = self.tableWidget.horizontalHeaderItem(0)
-        item.setText(_translate("MainWindow", "Sitio Web"))
-        item = self.tableWidget.horizontalHeaderItem(1)
-        item.setText(_translate("MainWindow", "Password"))
+        # item = self.tableWidget.horizontalHeaderItem(0)
+        # item.setText(_translate("MainWindow", "Sitio Web"))
+        # item = self.tableWidget.horizontalHeaderItem(1)
+        # item.setText(_translate("MainWindow", "Password"))
 
     def consulta(self):
+        self.tableWidget.setRowCount(0)
         sitio_buscar = self.sitio.toPlainText()
         password_principal = self.password.toPlainText()
-        Find_Values(sitio_buscar, password_principal)
+        Find_Values(sitio_buscar, 0)
+
+
+        try:
+        #coneccion a la db, la crea si no existe
+            cnn = conection(db_file)
+                
+
+            c = cnn.cursor()
+
+            c.execute("SELECT pass FROM All_info WHERE Page = ?", (sitio_buscar,))
+            data=c.fetchall()
+            if len(data)==0:
+
+                # if (acc==0):
+                print('There is no component named %s'%sitio_buscar)
+            
+                return True
+            else:
+                print('El registro existe -- siguiendo con la operacion ')
+                #if (acc==0):
+                    
+                # password = str(data[0])
+                self.tableWidget.setColumnCount(len(data[0]))
+                for i in range(len(data)):
+                    self.tableWidget.insertRow(i)
+                    for j in range(len(data[0])):
+                        print(i, j)
+                        self.tableWidget.setItem(i, j, QtWidgets.QTableWidgetItem(data[i][j]))
+                # print ('Password is ', password[2:-3])
+                return None
+            cnn.commit()
+            cnn.close()
+
+        except Error as e: 
+            print(e)
 
 
 if __name__ == "__main__":
