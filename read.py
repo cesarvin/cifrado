@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from db import *
 
 class Ui_Read(object):
     def setupUi(self, MainWindow):
@@ -74,6 +74,7 @@ class Ui_Read(object):
         item = QtWidgets.QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(1, item)
         MainWindow.setCentralWidget(self.centralwidget)
+        self.consultar.clicked.connect(self.consulta)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -88,6 +89,11 @@ class Ui_Read(object):
         item.setText(_translate("MainWindow", "Sitio Web"))
         item = self.tableWidget.horizontalHeaderItem(1)
         item.setText(_translate("MainWindow", "Password"))
+
+    def consulta(self):
+        sitio_buscar = self.sitio.toPlainText()
+        password_principal = self.password.toPlainText()
+        Find_Values(sitio_buscar, password_principal)
 
 
 if __name__ == "__main__":
