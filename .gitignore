@@ -363,3 +363,6 @@ FodyWeavers.xsd
 
 # BMP files
 #*.bmp
+
+# DB
+*.db
