@@ -60,7 +60,7 @@ def Set_Values(site, password):
         print(e)
 
 
-def Find_Values(site,acc):       
+def Find_Values(site):       
     try:
         #coneccion a la db, la crea si no existe
         cnn = conection(db_file)
@@ -72,16 +72,16 @@ def Find_Values(site,acc):
         data=c.fetchall()
         if len(data)==0:
 
-            if (acc==0):
-                print('There is no component named %s'%site)
+            # if (acc==0):
+            print('There is no component named %s'%site)
            
             return True
         else:
             print('El registro existe -- siguiendo con la operacion ')
-            if (acc==0):
+            #if (acc==0):
                 
-                password = str(data[0])
-                print ('Password is ', password[2:-3])
+            password = str(data[0])
+            print ('Password is ', password[2:-3])
             return None
         cnn.commit()
 
