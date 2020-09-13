@@ -17,7 +17,7 @@ import os
 import os.path
 from os import listdir
 from os.path import isfile, join
-from gl import *
+from cifrado import *
 from db import *
 
 db_file = 'storage.db'
@@ -77,10 +77,10 @@ class Ui_Login(object):
 
             password = self.masterPasswordVieja.toPlainText()
             #TODO - encriptar el password
-            ep = encryptMainPass(password)
+            #ep = encryptMainPass(password)
             
             #TODO - confirmar el password en la db
-            if login(ep):
+            if login(password):
                 self.window = QtWidgets.QMainWindow()
                 self.ui = Ui_Home()
                 self.ui.setupUi(self.window)
@@ -94,7 +94,7 @@ class Ui_Login(object):
             password = self.masterPasswordVieja.toPlainText()
             #encripta el password principal
             ep = encryptMainPass(password)
-
+            
             register(ep)
             self.window = QtWidgets.QMainWindow()
             self.ui = Ui_Home()

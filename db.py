@@ -1,5 +1,7 @@
 import sqlite3
 from sqlite3 import Error
+import binascii, os
+from cifrado import *
 
 db_file = 'storage.db'
 
@@ -20,10 +22,8 @@ def createSystemTables(cnn):
         #coneccion a la db, la crea si no existe
         c = cnn.cursor()
         #crea la tabla para la clave principal
-        c.execute("""CREATE TABLE main_pass (password text);""")
+        c.execute("""CREATE TABLE main_pass (password text, nonce text, tag text);""")
         c.execute("""CREATE TABLE All_info (Page text,pass text);""")
-
-        #TODO: 
 
     except Error as e:
         print (e)
@@ -117,7 +117,8 @@ def Delete_values(site):
 def insertMainPass(cnn, password):
     try:
         c = cnn.cursor()
-        c.execute("INSERT INTO main_pass(password) VALUES(?)", (password,))
+        
+        c.execute("INSERT INTO main_pass(password,nonce,tag) VALUES(?,?,?)", (password[0], password[1], password[2],))
 
     except Error as e: 
         print(e)
@@ -148,14 +149,16 @@ def login(password):
         cnn = conection(db_file)
         c = cnn.cursor()
         #consulta si el password est� en la db
-        c.execute("""SELECT password FROM main_pass WHERE password=?""", (password,))
+        c.execute("""SELECT password, nonce, tag FROM main_pass""")
         #c.execute("SELECT * FROM main_pass ")
         
         rows = c.fetchall()
-        
+
         for row in rows: 
-            if row[0] == password:
-                logged= True
+            main_pass = row[0],row[1],row[2]
+            dp = decryptMainPass(main_pass)
+            if (dp.decode("utf-8")==password):
+                logged = True
         
     except Error as e:
         print (e)
